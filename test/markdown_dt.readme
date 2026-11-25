@@ -1,0 +1,139 @@
+Short:        Markdown datatype: tables, code, images
+Author:       Serkan Dursun
+Uploader:     Serkan Dursun <blasterreal@gmail.com>
+Type:         util/dtype
+Version:      1.1.1
+Architecture: m68k-amigaos >= 3.2.0
+Distribution: Aminet
+Requires:     OS 3.2, 68020; text/edit/EmojiGear5.3.lha + TTF fonts advised
+
+markdown.datatype shows Markdown documents (.md, .markdown) in MultiView
+and in every other program that uses datatypes, the way GitHub or the
+preview of VS Code show them - not as plain text with stars and hashes.
+
+Features
+- Headings in three sizes, bold, italic, struck out text, inline code,
+  keys (<kbd>), horizontal rules, hard line breaks
+- Bullet, numbered and task lists, nested in any depth
+- Tables with column alignment; cells are wrapped inside their column
+- Code blocks in a box with syntax colours (C/C++, Python, JavaScript,
+  Java/C#, Rust, Go, shell, SQL, Lua, PHP, 68k assembler) and a "Copy"
+  button that puts the code into the clipboard
+- Pictures (![alt](file) and <img>), loaded with the system's picture
+  datatypes: PNG with alpha, JPEG, IFF and whatever else you have;
+  scaled down to the window, optional width, centred with <p align>
+- Links: web links open your browser (openurl.library), #heading links
+  scroll, also to HTML anchors like <a id="name"></a>; links to other
+  files open a new MultiView window
+- Block quotes, nested, and GitHub alerts ([!NOTE], [!TIP],
+  [!IMPORTANT], [!WARNING], [!CAUTION])
+- Entities (&copy; &euro; ...), :emoji: short codes, common HTML tags
+  (<b> <i> <a> <img> <br> <kbd> <p align> <div align> <hN>, comments),
+  front matter is hidden
+- Full UTF-8 text with colour emoji through utf8rastport.library
+  (FreeType); without it the text is converted to the system's 8 bit
+  character set and drawn with the system fonts
+- The text is wrapped again when the window is resized; layout and
+  drawing run in their own process, MultiView stays responsive
+- Mark lines by dragging the mouse over them; MultiView's "Copy" puts
+  them into the clipboard as plain text (the whole document if nothing
+  is marked). "Save As" writes the Markdown source
+- A default icon for Markdown files (def_markdown.info) and a tool that
+  adds the file type to DefIcons, so .md files get this icon on
+  Workbench and open in MultiView with a double click
+- A demo document with pictures, tables and code (Demo/Demo.md)
+- Installer script (English and Turkish) that installs and removes
+
+REQUIREMENTS - please read before installing
+   The datatype installs on any AmigaOS 3.x, but it only works as
+   described when the following is there. If something is missing it
+   may be installed without working correctly: documents may open as
+   plain text, without TrueType text and emoji, without pictures, or
+   not at all. The installer checks these points and tells you what
+   it did not find.
+
+   Needed
+   - AmigaOS 3.2 or newer (developed and tested on 3.2.3). It has NOT
+     been tested on 3.1, 3.5 and 3.9.
+   - 68020 or better. It is 68020 code: do NOT install it on a
+     68000/68010, it would crash there.
+   - Some free memory: the page is drawn into a bitmap of the window's
+     size, and pictures are kept in memory while the document is open.
+
+   Needed for the display shown in the feature list
+   - utf8rastport.library (tested with 5.1 and 6.1). It is part of
+     EmojiGear by krabobmkd (Aminet: text/edit/EmojiGear5.3.lha or
+     newer). Without it there
+     are no TrueType fonts, no larger headings and no emoji; characters
+     outside your 8 bit character set are replaced by similar ones or
+     by "?".
+   - TrueType fonts. By default the datatype looks for
+       FONTS:_ttf/DejaVuSans.ttf        text
+       FONTS:_ttf/DejaVuSansMono.ttf    code
+       FONTS:_ttf/NotoColorEmoji32.ttf  emoji
+     and, if these are missing, for Vera, Liberation Sans, Verdana,
+     Arial or Tahoma in FONTS:_ttf/. Other fonts and the size are set
+     in ENVARC:DataTypes/markdown.prefs (see markdown.prefs.example).
+     No fonts are included. The DejaVu fonts are free
+     (https://dejavu-fonts.github.io); for emoji fonts see the EmojiGear
+     documentation.
+   - picture.datatype 43 or newer and datatypes for the picture formats
+     you use (png.datatype and jpeg.datatype of AmigaOS 3.2 are fine).
+     Without them a picture shows its description only.
+   - A graphics card (RTG: Picasso96 or CyberGraphX) with a 15, 16, 24
+     or 32 bit screen is recommended. On screens with 256 colours or
+     less the colours are approximated; pictures on such screens have
+     NOT been tested.
+
+   Optional
+   - openurl.library, to open web links in your browser. Without it a
+     click on a web link copies its address to the clipboard.
+   - DefIcons (part of AmigaOS 3.2) running, for the icon of .md files.
+
+Installation
+   Double-click Install-markdown_dt. It copies
+     Classes/DataTypes/markdown.datatype  to SYS:Classes/DataTypes
+     Devs/DataTypes/Markdown, Markdown_UTF-8  to DEVS:DataTypes
+     Prefs/Env-Archive/Sys/def_markdown.info  to ENVARC:Sys and ENV:Sys
+   and, if you agree, adds the type "markdown" to
+   ENVARC:deficons.prefs (the original is kept as
+   ENVARC:deficons.prefs.before-markdown). Reboot afterwards. The same
+   script removes everything again. To install by hand, copy these
+   files yourself and reboot; ReadMe.txt has the details.
+
+   Then open Demo/Demo.md.
+
+Known limits
+   Printing is not supported. Footnotes are shown as text, <details>
+   blocks are always open, pictures inside a line of text and pictures
+   from the web show their description only.
+
+Tested on AmigaOS 3.2.3 with WinUAE (68060, UAEGFX) and on an A1200
+with PiStorm/Emu68 (68040, RTG 1920x1080).
+
+Freeware. Copyright (C) 2026 Serkan Dursun. You may use and copy this
+package freely as long as it is complete and unchanged; no warranty of
+any kind. utf8rastport.library and EmojiGear are by krabobmkd and are
+not part of this package.
+
+History
+1.1.1  Closer to GitHub: code, **bold** and links in one heading; code
+     in headings at heading size; markers without a partner ("made with
+     ***.") stay text; links to "../file.md" in the parent drawer; links
+     to the second heading of a name (#name-1); "1. [x]" keeps its
+     number; [!note] in small letters; all Latin-1 entities (&auml;) and
+     more. The "i" in H2 headings has its dot again. Numbers of a list
+     were missing with wide system fonts (TTF=0).
+     Thanks to the author of Dash for the report.
+1.1  (Not on Aminet, sent to testers only.)
+     Links to HTML anchors work: [text](#name) goes to the tag with
+     id="name" or name="name" (<a id="name"></a>, <h2 id="name"> ...),
+     as many documents on GitHub use them. Headings that are code
+     (### `function(x)`) are drawn bold, as headings.
+     Lines can be marked with the mouse and copied as plain text with
+     MultiView's "Copy": paragraphs come as one line, list items with
+     their markers, table cells with tabs between them. "Copy", "Save
+     As" and "Clear Selected" are enabled in MultiView's menus now (the
+     datatype did not tell MultiView that it can do them).
+     Thanks to Ferran for the reports and the test document.
+1.0  First release.
